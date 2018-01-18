@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <RelativeLayout
+            android:id="@+id/home_article_list_item_parent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:background="?attr/selectableItemBackground">
+
+            <LinearLayout
+                android:id="@+id/home_article_details_parent_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@+id/home_article_image_view_list_item"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/home_article_category_list_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textAllCaps="true"
+                    tools:text="Featured"/>
+
+                <TextView
+                    android:id="@+id/home_article_title_list_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingTop="5dp"
+                    android:maxLines="3"
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    tools:text="The article title goes really long and lets" />
+
+                <TextView
+                    android:id="@+id/home_article_author_and_date_list_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/text_gray"
+                    android:textSize="14sp"
+                    tools:text="By: Sergio R. Angeles" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/home_article_image_view_list_item"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:paddingRight="16dp"
+                tools:srcCompat="@android:drawable/btn_star" />
+
+
+        </RelativeLayout>
+
+</layout>

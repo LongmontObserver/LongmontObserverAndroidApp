@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "465733819440",
+    "firebase_url": "https://longmont-observer-mobile-app.firebaseio.com",
+    "project_id": "longmont-observer-mobile-app",
+    "storage_bucket": "longmont-observer-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465733819440:android:4abe4f0ea4c2b357",
+        "android_client_info": {
+          "package_name": "com.lngmnt.longmontobserver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465733819440-md3vif844b855146tsph816658c78m48.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZVNnM1jeHNBz0Bq1w39L82IJWfdRN3mI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465733819440:android:52d7fbc8dc131cff",
+        "android_client_info": {
+          "package_name": "com.lngmnt.longmontobserver.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465733819440-md3vif844b855146tsph816658c78m48.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZVNnM1jeHNBz0Bq1w39L82IJWfdRN3mI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465733819440:android:77b92587e4edf73e",
+        "android_client_info": {
+          "package_name": "com.lngmnt.longmontobserver.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465733819440-md3vif844b855146tsph816658c78m48.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZVNnM1jeHNBz0Bq1w39L82IJWfdRN3mI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:465733819440:android:0432a4debb007713",
+        "android_client_info": {
+          "package_name": "com.lngmnt.longmontobserver.dev.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "465733819440-md3vif844b855146tsph816658c78m48.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZVNnM1jeHNBz0Bq1w39L82IJWfdRN3mI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

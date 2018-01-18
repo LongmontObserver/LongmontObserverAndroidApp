@@ -1,0 +1,42 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lngmnt.longmontobserver">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_longmont_observer"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_longmont_observer_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".view.splash.SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.HomeActivity"
+            android:label="@string/activity_home_toolbar_title"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".view.article.ArticleActivity"
+            android:parentActivityName=".view.HomeActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.settings.SettingsActivity"
+            android:parentActivityName=".view.HomeActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/activity_settings_title"
+            android:theme="@style/AppTheme.NoActionBar"/>
+    </application>
+</manifest>
