@@ -1,10 +1,8 @@
 package com.lngmnt.longmontobserver.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,17 +18,15 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ViewFlipper;
 
 import com.bumptech.glide.Glide;
-import com.github.pwittchen.reactivenetwork.library.rx2.Connectivity;
 import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.lngmnt.longmontobserver.BuildConfig;
 import com.lngmnt.longmontobserver.R;
 import com.lngmnt.longmontobserver.databinding.ActivityHomeBinding;
 import com.lngmnt.longmontobserver.model.LongmontObserverAnalytics;
-import com.lngmnt.longmontobserver.model.network.request.GetArticleListRequest;
 import com.lngmnt.longmontobserver.model.network.service.LOWordpressService;
 import com.lngmnt.longmontobserver.model.wordpress.ArticleList;
 import com.lngmnt.longmontobserver.utils.ViewUtils;
@@ -43,7 +39,6 @@ import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -137,7 +132,6 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
 
                 int firstVisibleItemPosition = mLinearLayoutManager.findFirstVisibleItemPosition();
 
-
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
                             && totalItemCount >= 20) {
@@ -147,22 +141,26 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         });
 
         // Make the initial article list request
-        makeInitialArticleListRequest();
+        checkInternetConnection();
     }
 
-    private void makeRequest() {
-        Log.d(TAG, "makeRequest: ");
 
-        Single<Boolean> single = ReactiveNetwork.checkInternetConnectivity();
 
-        single.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        Log.d(TAG, "is connected to internet: " + aBoolean);
-                    }
-                });
+        private void checkInternetConnection() {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "checkInternetConnection: ");
+        }
+
+            Single<Boolean> checkInternetConnectivity = ReactiveNetwork.checkInternetConnectivity();
+            checkInternetConnectivity.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(isConnectedToTheInternet -> {
+                        makeInitialArticleListRequest();
+                    }, throwable -> {
+
+                        // display the empty/error view state
+                        displayEmptyHomeState();
+                    });
 
         }
 
@@ -172,57 +170,21 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
             Log.d(TAG, "makeInitialArticleListRequest: ");
         }
 
-        makeRequest();
-
-
         LOWordpressService service = new LOWordpressService();
 
         service.getLoWordpressApi().getArticleListEmbed(null, 20, null).subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<List<ArticleList>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
+                .subscribe(articleLists -> {
+                    //refresh the data
+                    homeRecyclerViewAdapter.refreshRecyclerViewData(articleLists);
 
-                    }
+                    displayRecyclerViewHomeState();
 
-                    @Override
-                    public void onNext(List<ArticleList> articleLists) {
-
-                        //refresh the data
-                        homeRecyclerViewAdapter.refreshRecyclerViewData(articleLists);
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        if (BuildConfig.DEBUG) {
-                            Log.e("HOME", e.getMessage());
-                        }
-
-                        // display the empty/error view state
-                        updateHomeViewState(HomeViewState.EMPTY);
-
-                        // update the swipe pull down refresh
-                        if (mSwipeRefreshlayout.isRefreshing()) {
-                            mSwipeRefreshlayout.setRefreshing(false);
-                        }
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        if (BuildConfig.DEBUG) {
-                            Log.d("HOMEACTIVTY", "on complete");
-                        }
-
-                        // update the view state to display the recylcer view
-                        updateHomeViewState(HomeViewState.WITH_DATA);
-
-                        if (mSwipeRefreshlayout.isRefreshing()) {
-                            // update the swipe pull down refresh
-                            mSwipeRefreshlayout.setRefreshing(false);
-                        }
-                    }
+                }, throwable -> {
+                    // Display the empty home state
+                    displayEmptyHomeState();
                 });
+
     }
 
     @Override
@@ -270,6 +232,33 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
     }
 
+    private void displayRecyclerViewHomeState() {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "displayRecyclerViewHomeState: ");
+        }
+
+        // update the view state to display the recylcer view
+        updateHomeViewState(HomeViewState.WITH_DATA);
+
+        if (mSwipeRefreshlayout.isRefreshing()) {
+            // update the swipe pull down refresh
+            mSwipeRefreshlayout.setRefreshing(false);
+        }
+    }
+
+    private void displayEmptyHomeState() {
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "displayEmptyHomeState: ");
+        }
+        // update the view state to display the recylcer view
+        updateHomeViewState(HomeViewState.EMPTY);
+
+        if (mSwipeRefreshlayout.isRefreshing()) {
+            // update the swipe pull down refresh
+            mSwipeRefreshlayout.setRefreshing(false);
+        }
+    }
+
     private void updateHomeViewState (HomeViewState homeViewState) {
         Integer displayedChildViewResId = null;
         switch (homeViewState) {
@@ -305,7 +294,8 @@ public class HomeActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
 
         // Make the initial api call
-        makeInitialArticleListRequest();
+//        makeInitialArticleListRequest();
+        checkInternetConnection();
     }
 
     @Override
