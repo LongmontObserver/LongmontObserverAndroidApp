@@ -10,6 +10,7 @@ import com.lngmnt.longmontobserver.model.wordpress.media.Media;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -43,7 +44,7 @@ public interface LOWordpressApi {
      * @return
      */
     @GET("/wp-json/wp/v2/posts?_embed")
-    public Observable<List<ArticleList>> getArticleListEmbed(
+    public Single<List<ArticleList>> getArticleListEmbed(
             @Query("page") Integer pageNumber,
             @Query("per_page") Integer articlesPerPage,
             @Query("offset") Integer offsetNumber);

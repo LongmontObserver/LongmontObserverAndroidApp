@@ -15,7 +15,7 @@
     <string name="nav_menu_support_title">Support Longmont Observer</string>
 
     <!-- Activity Home -->
-    <string name="activity_home_empty_layout_error">Oops, we couldn\'t get any articles. Please refresh or try again soon.</string>
+    <string name="activity_home_empty_layout_error">Oops, we had trouble retrieving articles for you. Please refresh or try again soon.</string>
 
     <!-- Activity Article-->
     <string name="activity_article_empty_layout_error">Oops, we couldn\'t load the article. Please refresh or try again soon.</string>
